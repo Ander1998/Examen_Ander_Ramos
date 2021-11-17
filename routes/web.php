@@ -14,7 +14,8 @@ use App\Models\Pacient;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//I know it should be called patients and not pacients but I made that mistake at the begging of the
+//laravel project and I realized very late so I just stick with it
 Route::get('/', function () {
     return view('main');
 });
@@ -83,13 +84,22 @@ Route::post('/createpacient', function(Request $req) {
 
 Route::get('/doctors_pacients', function() {
     $html = "<ul>";
+    
+    //get the info of the doctors and pacients(it should contain the array of doctors and pacients)
     $doctor = new Doctor;
     $pacient = new Pacient;
 
+    //loop through the array of doctors and concat in the html variable the name of doctor in the position $x
     for($x=0;$x<count($doctor->id);$x++) {
         $html = $html . "<li>" . $doctor[$x]->name . "</li>";
+
+        //loop through the array of pacients
         for($i=0;$i<count($pacient->id);$i++) {
+
+            //if the value of the doctor id is the same that the pacient has in the doctor_id column
             if($doctor[$x]->id == $pacient[$i]->doctor_id) {
+
+                //concat in the html variable the name of the pacient in the position $i
                 $html = $html . "<li>" . $pacient[$i]->name . "</li>";
             }
         }
@@ -101,11 +111,22 @@ Route::get('/doctors_pacients', function() {
 
 Route::get('/doctorsoveraverage', function() {
     $html = "<ul>";
+    
+    //get the info of the doctors and pacients(it should contain the array of doctors and pacients)
     $doctor = new Doctor;
     $pacient = new Pacient;
+
+    //get the average number of pacient per doctor
     $avgpacients = count($doctor->pacients)/count($doctor->id);
+
+    //loop through the number of doctors in the recovered object
     for($x=0;$x<count($doctor->id);$x++) {
-        if($doctor[$x]->pacients > $avgpacients) {
+
+        //if the number of pacients for the doctor in the position $x is higher than the average
+        //number of pacients per doctor
+        if(count($doctor[$x]->pacients) > $avgpacients) {
+
+            //concat in the html variable the name and last name of the doctor
             $html = $html . "<li>" . $doctor[$x]->name . $doctor[$x]->surname . "</li>";
         }
     }
