@@ -80,3 +80,36 @@ Route::post('/createpacient', function(Request $req) {
 
     return view('main');
 });
+
+Route::get('/doctors_pacients', function() {
+    $html = "<ul>";
+    $doctor = new Doctor;
+    $pacient = new Pacient;
+
+    for($x=0;$x<count($doctor->id);$x++) {
+        $html = $html . "<li>" . $doctor[$x]->name . "</li>";
+        for($i=0;$i<count($pacient->id);$i++) {
+            if($doctor[$x]->id == $pacient[$i]->doctor_id) {
+                $html = $html . "<li>" . $pacient[$i]->name . "</li>";
+            }
+        }
+    }
+    $html = $html . "</ul>";
+
+    return $html;
+});
+
+Route::get('/doctorsoveraverage', function() {
+    $html = "<ul>";
+    $doctor = new Doctor;
+    $pacient = new Pacient;
+    $avgpacients = count($doctor->pacients)/count($doctor->id);
+    for($x=0;$x<count($doctor->id);$x++) {
+        if($doctor[$x]->pacients > $avgpacients) {
+            $html = $html . "<li>" . $doctor[$x]->name . $doctor[$x]->surname . "</li>";
+        }
+    }
+    $html = $html . "</ul>";
+
+    return $html;
+});
