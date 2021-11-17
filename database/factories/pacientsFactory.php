@@ -21,7 +21,7 @@ class pacientsFactory extends Factory
             'dni' => $this->faker->numberBetween(00000000, 99999999) . $this->faker->randomLetter(),
             'birthdate' => $this->faker->dateTime(),
             'vacinated' => $this->faker->numberBetween(0,1),
-            'doctor_id' => doctorsFactory::all()->random()->id,
+            'doctor_id' => Doctors::all()->random()->id,
         ];
     }
 }

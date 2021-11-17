@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use Database\Factories\pacientsFactory;
 use Illuminate\Database\Seeder;
+use DB;
 
 class pacients extends Seeder
 {
@@ -21,7 +23,7 @@ class pacients extends Seeder
             'dni' => '12345678A',
             'birthdate' => '1998/08/31',
             'vacinated' => '0',
-            'doctor_id' => '',
+            'doctor_id' => Doctors::all()->random()->id,
         ]);
 
         DB::table('pacients')->insert([
@@ -31,7 +33,7 @@ class pacients extends Seeder
             'dni' => '12345678B',
             'birthdate' => '1998/08/30',
             'vacinated' => '0',
-            'doctor_id' => '',
+            'doctor_id' => Doctors::all()->random()->id,
         ]);
 
         DB::table('pacients')->insert([
@@ -41,7 +43,7 @@ class pacients extends Seeder
             'dni' => '12345678C',
             'birthdate' => '1998/08/29',
             'vacinated' => '1',
-            'doctor_id' => '',
+            'doctor_id' => Doctors::all()->random()->id,
         ]);
 
         DB::table('pacients')->insert([
@@ -51,7 +53,9 @@ class pacients extends Seeder
             'dni' => '12345678D',
             'birthdate' => '1998/08/28',
             'vacinated' => '0',
-            'doctor_id' => '',
+            'doctor_id' => Doctors::all()->random()->id,
         ]);
+
+        pacientsFactory::factory(100)->create();
     }
 }
